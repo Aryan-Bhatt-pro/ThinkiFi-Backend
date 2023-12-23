@@ -2,6 +2,8 @@ const axios = require('axios');
 const dfd = require('danfojs-node');
 const fs = require('fs');
 
+const getReTweets = async () => {
+
 const url = 'https://twitter154.p.rapidapi.com/tweet/retweets';
 const urlContinuation = 'https://twitter154.p.rapidapi.com/tweet/retweets/continuation';
 
@@ -39,7 +41,7 @@ const fetchData = async (url, queryString) => {
   }
 };
 
-const fetchAllRetweets = async () => {
+
   const initialResponse = await fetchData(url, querystring);
 
   while (continuationToken !== '') {
@@ -77,16 +79,9 @@ const fetchAllRetweets = async () => {
       break;
     }
   }
+
+  return allRetweets;
 };
 
-fetchAllRetweets().then(() => {
-  // Assuming `all_retweets` is an array of retweet objects
-  const retweetersDf = new dfd.DataFrame(allRetweets);
+module.exports = getReTweets;
 
-  // Convert the DataFrame to a JSON object
-  dfd.toJSON(retweetersDf, { filePath: "./testOutput_retweets.json"});
-
-  // Save the JSON data to a file
-//   console.log(jsonData);
-//   fs.writeFileSync('raga_amritkaal_tweet_retweeters_data.json', jsonData);
-});

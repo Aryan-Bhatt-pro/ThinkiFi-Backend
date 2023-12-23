@@ -1,9 +1,9 @@
 const axios = require('axios');
 const dfd = require('danfojs-node');
 const fs = require('fs');
-const { format } = require('path');
+// const { format } = require('path');
 
-async function searchByHashtag() {
+async function getTweets() {
   const url = 'https://twitter154.p.rapidapi.com/search/search';
   const urlContinuation = 'https://twitter154.p.rapidapi.com/search/search/continuation';
   const headers = {
@@ -130,13 +130,13 @@ async function searchByHashtag() {
       }
     }
   }
+  
+  return allTweets;
+  // // Assuming `all_tweets` is an array of tweet objects
+  // const hashtagDf = new dfd.DataFrame(allTweets);
 
-  // Assuming `all_tweets` is an array of tweet objects
-  const hashtagDf = new dfd.DataFrame(allRetweets);
-
-  // Convert the DataFrame to a JSON object
-  dfd.toJSON(hashtagDf, { filePath: "./testOutput_hashtag.json"});
+  // // Convert the DataFrame to a JSON object
+  // dfd.toJSON(hashtagDf, { filePath: "./testOutput_hashtag.json"});
 }
 
-// Call the async function
-searchByHashtag().catch(error => console.error(error));
+module.exports = getTweets;
